@@ -6,24 +6,19 @@ from weblogic.management.security.authentication import UserEditorMBean, UserRea
 # PS sorry for passwords in plain text
 
 #
-# Declaration of variables
+# Declaration of variables for connection to every admin console
 #
 
-# Because of problems during declaring variable for connect,
-# values are separated in lists and called separately for each column in while cycle
+# string = ['username', 'pass', 't3://port:url']
 
-username_lst = ["username", "", "", "", "", "", "", ""]
-password_lst = ["password", "", "", "", "", "", "", ""]
-url_lst = ["url:port", "", "", "", "", "", "", ""]
-env_list = ["SOA_PRD", "", "", "", "", "", "", ""]
+SOA_SIT = ['username', 'password', 't3://ip:port']
+
+
+ENV_LIST = [SOA_SIT]
 
 # Groups to be user attached to
 group_name1 = "Monitors"
 group_name2 = "Operators"
-
-# While cycle variables
-i = 0
-env_left = True
 
 # Raw input of user's data
 user_name = raw_input("Enter name of the user: ")
@@ -31,12 +26,12 @@ user_password = raw_input("Enter password of the user: ")
 user_description = raw_input("Enter user description: ")
 
 
-while env_left:
-    print("Connecting to server: " + env_list[i])
+for i in ENV_LIST:
+    print("Connecting to server: " + i[2])
     try:
-        connect(username=username_lst[i], password=password_lst[i], url=url_lst[i])
+        connect(*i)
     except Exception:
-        print("I failed to connect to server" + env_list[i] + ", call Lampros's personal number to investigate further")
+        print("I failed to connect to server " + i[2] + ", call Lampros's personal number to investigate further")
 
     atnr = cmo.getSecurityConfiguration().getDefaultRealm().lookupAuthenticationProvider("DefaultAuthenticator")
     print("Creation of user: " + user_name)
@@ -59,8 +54,3 @@ while env_left:
         print("User added to group " + group_name2 + " successfully!")
     except Exception:
         print("Error: Failed to add user " + user_name + " to group: " + group_name2)
-
-    i += 1
-    if i == len(username_lst):
-        env_left = False
-
