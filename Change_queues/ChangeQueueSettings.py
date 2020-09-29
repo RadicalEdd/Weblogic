@@ -1,3 +1,5 @@
+# Example of queue path
+# '/JMSSystemResources/$app/JMSResource/$app/UniformDistributedQueues/$appqueue/DeliveryParamsOverrides/$appsStatusQueue'
 delivery_param_queues = [
 '/path/to/jms/queue',
 '/path/to/jms/queue',
