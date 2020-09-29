@@ -1,4 +1,4 @@
-# Script for app decommission though WLST
+# Script for app decommission through WLST
 # For more info contact @Martin Pazourek
 import sys
 
